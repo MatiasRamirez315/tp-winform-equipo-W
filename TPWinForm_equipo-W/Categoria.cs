@@ -12,6 +12,12 @@ namespace TPWinForm_equipo_W
 
         public  string Descripcion { get; set; }
 
+        public Categoria() { }
+        public Categoria(int id, string descripcion) {
+            IDCategoria = id;
+            Descripcion = descripcion;
+        }
+
         public override string ToString()
         {
             return Descripcion;

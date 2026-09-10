@@ -16,5 +16,20 @@ namespace TPWinForm_equipo_W
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            dgvArticulos.DataSource = negocio.listar();
+
+            if (dgvArticulos.Columns["Imagenes"] != null) {
+                dgvArticulos.Columns["Imagenes"].Visible = false;
+            }
+
+            if (dgvArticulos.Columns["IDArticulo"] != null)
+            {
+                dgvArticulos.Columns["IDArticulo"].Visible =false;
+            }
+        }
     }
 }
