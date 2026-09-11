@@ -74,5 +74,18 @@ namespace TPWinForm_equipo_W
             }
 
         }
+
+        public void agregar(Articulo articulo)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
