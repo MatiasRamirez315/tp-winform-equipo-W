@@ -19,7 +19,7 @@ namespace TPWinForm_equipo_W
 
             try
             {
-                conexion.ConnectionString = "server=(localdb)\\MSSQLLocalDB; database=CATALOGO_P3_DB; integrated security=true";
+                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_P3_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
                 comando.CommandText = "SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.Precio, \r\n       M.Id AS IdMarca, M.Descripcion AS Marca, \r\n       C.Id AS IdCategoria, C.Descripcion AS Categoria\r\nFROM ARTICULOS A\r\nLEFT JOIN MARCAS M ON A.IdMarca = M.Id\r\nLEFT JOIN CATEGORIAS C ON A.IdCategoria = C.Id ";
                 comando.Connection = conexion;

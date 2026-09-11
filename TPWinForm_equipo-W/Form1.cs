@@ -31,5 +31,11 @@ namespace TPWinForm_equipo_W
                 dgvArticulos.Columns["IDArticulo"].Visible =false;
             }
         }
+
+        private void btnAgregarArticulo_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulo altaArticulo = new frmAltaArticulo();
+            altaArticulo.ShowDialog();
+        }
     }
 }
