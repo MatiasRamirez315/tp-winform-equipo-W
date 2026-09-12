@@ -36,19 +36,19 @@
             // dgvArticulos
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(58, 34);
-            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvArticulos.Location = new System.Drawing.Point(87, 52);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.RowHeadersWidth = 62;
             this.dgvArticulos.RowTemplate.Height = 28;
-            this.dgvArticulos.Size = new System.Drawing.Size(576, 243);
+            this.dgvArticulos.Size = new System.Drawing.Size(864, 374);
             this.dgvArticulos.TabIndex = 0;
             // 
             // btnAgregarArticulo
             // 
-            this.btnAgregarArticulo.Location = new System.Drawing.Point(58, 327);
+            this.btnAgregarArticulo.Location = new System.Drawing.Point(87, 503);
+            this.btnAgregarArticulo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAgregarArticulo.Name = "btnAgregarArticulo";
-            this.btnAgregarArticulo.Size = new System.Drawing.Size(95, 23);
+            this.btnAgregarArticulo.Size = new System.Drawing.Size(142, 35);
             this.btnAgregarArticulo.TabIndex = 1;
             this.btnAgregarArticulo.Text = "Agregar Articulo";
             this.btnAgregarArticulo.UseVisualStyleBackColor = true;
@@ -56,12 +56,11 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(787, 407);
+            this.ClientSize = new System.Drawing.Size(1180, 626);
             this.Controls.Add(this.btnAgregarArticulo);
             this.Controls.Add(this.dgvArticulos);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
