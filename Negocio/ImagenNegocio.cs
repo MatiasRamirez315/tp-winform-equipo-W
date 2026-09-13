@@ -40,5 +40,28 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public string listarImagenPorIDArticulo(int id)
+        {
+            Imagen imagen = new Imagen();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT I.ImagenUrl FROM IMAGENES I WHERE I.IdArticulo = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    imagen.URLImagen = (string)datos.Lector["ImagenUrl"];
+                }
+
+                    return imagen.URLImagen;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

@@ -48,30 +48,18 @@ namespace TPWinForm_equipo_W
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvArticulos.CurrentRow == null) return;
-            if (listaImagenes == null || listaImagenes.Count == 0) return;
-
             Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-            Imagen img = listaImagenes.FirstOrDefault(i => i.IDArticulo == seleccionado.IDArticulo);
+            ImagenNegocio img = new ImagenNegocio();
+            string url = img.listarImagenPorIDArticulo(seleccionado.IDArticulo);
 
-            cargarImagen(img?.URLImagen);
+            cargarImagen(url);
         }
 
         private void cargarImagen(string imagen)
         {
-            pbxImagen.WaitOnLoad = true;
-
             try
             {
-                if (string.IsNullOrWhiteSpace(imagen))
-                {
-                    pbxImagen.Image = null;
-                    return;
-                }
-
-                pbxImagen.Image = null;
-
-                pbxImagen.Load(imagen.Trim());
+                pbxImagen.Load(imagen);
             }
             catch
             {
