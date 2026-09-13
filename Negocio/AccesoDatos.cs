@@ -19,7 +19,7 @@ namespace Negocio
         }
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=(localdb)\\MSSQLLocalDB; database=CATALOGO_P3_DB; integrated security=true");
+            conexion = new SqlConnection("server=.\\SQLExpress; database=CATALOGO_P3_DB; integrated security=true");
             comando = new SqlCommand();
         }
 
@@ -60,7 +60,7 @@ namespace Negocio
             }
         }
 
-        public void Desconectar()
+        public void cerrarConexion()
         {
             if (lector != null)
             {

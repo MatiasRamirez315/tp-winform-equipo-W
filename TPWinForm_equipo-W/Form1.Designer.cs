@@ -30,41 +30,56 @@
         {
             this.dgvArticulos = new System.Windows.Forms.DataGridView();
             this.btnAgregarArticulo = new System.Windows.Forms.Button();
+            this.pbxImagen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxImagen)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvArticulos
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(87, 52);
+            this.dgvArticulos.Location = new System.Drawing.Point(25, 29);
+            this.dgvArticulos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.RowHeadersWidth = 62;
             this.dgvArticulos.RowTemplate.Height = 28;
-            this.dgvArticulos.Size = new System.Drawing.Size(864, 374);
+            this.dgvArticulos.Size = new System.Drawing.Size(576, 243);
             this.dgvArticulos.TabIndex = 0;
+            this.dgvArticulos.SelectionChanged += new System.EventHandler(this.dgvArticulos_SelectionChanged);
             // 
             // btnAgregarArticulo
             // 
-            this.btnAgregarArticulo.Location = new System.Drawing.Point(87, 503);
-            this.btnAgregarArticulo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnAgregarArticulo.Location = new System.Drawing.Point(25, 311);
             this.btnAgregarArticulo.Name = "btnAgregarArticulo";
-            this.btnAgregarArticulo.Size = new System.Drawing.Size(142, 35);
+            this.btnAgregarArticulo.Size = new System.Drawing.Size(95, 23);
             this.btnAgregarArticulo.TabIndex = 1;
             this.btnAgregarArticulo.Text = "Agregar Articulo";
             this.btnAgregarArticulo.UseVisualStyleBackColor = true;
             this.btnAgregarArticulo.Click += new System.EventHandler(this.btnAgregarArticulo_Click);
             // 
+            // pbxImagen
+            // 
+            this.pbxImagen.Location = new System.Drawing.Point(632, 29);
+            this.pbxImagen.Name = "pbxImagen";
+            this.pbxImagen.Size = new System.Drawing.Size(254, 243);
+            this.pbxImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxImagen.TabIndex = 2;
+            this.pbxImagen.TabStop = false;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1180, 626);
+            this.ClientSize = new System.Drawing.Size(930, 380);
+            this.Controls.Add(this.pbxImagen);
             this.Controls.Add(this.btnAgregarArticulo);
             this.Controls.Add(this.dgvArticulos);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxImagen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -73,6 +88,7 @@
 
         private System.Windows.Forms.DataGridView dgvArticulos;
         private System.Windows.Forms.Button btnAgregarArticulo;
+        private System.Windows.Forms.PictureBox pbxImagen;
     }
 }
 

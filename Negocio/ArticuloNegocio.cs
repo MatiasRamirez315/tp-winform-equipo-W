@@ -67,7 +67,7 @@ namespace Negocio
             }
             finally
             {
-                datos.Desconectar();
+                datos.cerrarConexion();
             }
 
         }
@@ -93,7 +93,7 @@ namespace Negocio
             }
             finally
             {
-                datos.Desconectar();
+                datos.cerrarConexion();
             }
         }
     }
