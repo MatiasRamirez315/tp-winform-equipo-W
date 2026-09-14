@@ -34,14 +34,29 @@ namespace TPWinForm_equipo_W
                 articulo.Nombre = txtNombre.Text;   
                 articulo.Descripcion = txtDescripcion.Text;
                 articulo.Precio = decimal.Parse(txtPrecio.Text);
-                articulo.Marca = new Marca();
-                articulo.Marca.Descripcion = txtMarca.Text;
-                articulo.Categoria = new Categoria();
-                articulo.Categoria.Descripcion = txtCategoria.Text;
+                articulo.Marca = (Marca)cboMarca.SelectedItem;
+                articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
                 articuloNegocio.agregar(articulo);
                 MessageBox.Show("Articulo agregado correctamente");
                 Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void frmAltaArticulo_Load(object sender, EventArgs e)
+        {
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+
+            try
+            {
+                cboCategoria.DataSource = categoriaNegocio.listar();
+                cboMarca.DataSource = marcaNegocio.listar();
+
             }
             catch (Exception ex)
             {
