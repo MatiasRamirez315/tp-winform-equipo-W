@@ -11,7 +11,7 @@ namespace Negocio
 {
     public class ArticuloNegocio
     {
-        public  List<Articulo> listar()
+        public List<Articulo> listar()
         {
             List<Articulo> lista = new List<Articulo>();
             AccesoDatos datos = new AccesoDatos();
@@ -26,9 +26,9 @@ namespace Negocio
                     Articulo auxArticulo = new Articulo();
 
                     auxArticulo.IDArticulo = (int)datos.Lector["Id"];
-                    if(!(datos.Lector["Codigo"] is DBNull)) 
-                    auxArticulo.Codigo = (string)datos.Lector["Codigo"];
-               
+                    if (!(datos.Lector["Codigo"] is DBNull))
+                        auxArticulo.Codigo = (string)datos.Lector["Codigo"];
+
                     if (!(datos.Lector["Nombre"] is DBNull))
                         auxArticulo.Nombre = (string)datos.Lector["Nombre"];
                     if (!(datos.Lector["Descripcion"] is DBNull))
@@ -38,9 +38,10 @@ namespace Negocio
 
                     if (!(datos.Lector["IdMarca"] is DBNull))
                     {
-                         auxArticulo.Marca = new Marca();
+                        auxArticulo.Marca = new Marca();
                         auxArticulo.Marca.IDMarca = (int)datos.Lector["IdMarca"];
-                        if (!(datos.Lector["Marca"] is DBNull)) { 
+                        if (!(datos.Lector["Marca"] is DBNull))
+                        {
                             auxArticulo.Marca.Descripcion = (string)datos.Lector["Marca"];
                         }
                     }
@@ -57,11 +58,11 @@ namespace Negocio
 
                     lista.Add(auxArticulo);
 
-                }   
+                }
 
                 return lista;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -74,16 +75,16 @@ namespace Negocio
 
         public void agregar(Articulo articulo)
         {
-           
+
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("Insert into Articulos(Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria) "+ "VALUES('" + articulo.Codigo + "', '" + articulo.Nombre + "', '" + articulo.Descripcion + "', " + articulo.Precio + ", " + articulo.Marca.IDMarca + ", " + articulo.Categoria.IDCategoria + ")");
+                datos.setearConsulta("Insert into Articulos(Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria) " + "VALUES('" + articulo.Codigo + "', '" + articulo.Nombre + "', '" + articulo.Descripcion + "', " + articulo.Precio + ", " + articulo.Marca.IDMarca + ", " + articulo.Categoria.IDCategoria + ")");
 
 
                 datos.EjecutarAccion();
-                
+
             }
             catch (Exception ex)
             {
@@ -117,6 +118,21 @@ namespace Negocio
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+        }
+
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("delete from Articulos where Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

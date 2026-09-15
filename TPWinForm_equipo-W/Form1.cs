@@ -84,5 +84,25 @@ namespace TPWinForm_equipo_W
             cargar();
            
         }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+            Articulo seleccionado;
+            try
+            {
+                DialogResult respuesta = MessageBox.Show("Se eliminara el articulo seleccionado", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                   seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                   articuloNegocio.eliminar(seleccionado.IDArticulo);
+                   cargar();
+                } 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
