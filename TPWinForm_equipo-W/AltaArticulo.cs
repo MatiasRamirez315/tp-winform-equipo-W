@@ -14,9 +14,17 @@ namespace TPWinForm_equipo_W
 {
     public partial class frmAltaArticulo : Form
     {
+        private Articulo articulo = null;
         public frmAltaArticulo()
         {
             InitializeComponent();
+        }
+
+        public frmAltaArticulo(Articulo modificar)
+        {
+            InitializeComponent();
+            articulo = modificar;
+            Text = "Modificar";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -26,10 +34,14 @@ namespace TPWinForm_equipo_W
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Articulo articulo = new Articulo();
             ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+
             try
             {
+                if (articulo == null)
+                {
+                    articulo = new Articulo();
+                }
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;   
                 articulo.Descripcion = txtDescripcion.Text;
@@ -37,8 +49,19 @@ namespace TPWinForm_equipo_W
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
+
+                if (articulo.IDArticulo != 0)
+                {
+                articuloNegocio.Modificar(articulo);
+                MessageBox.Show("Articulo modificado correctamente");
+                }
+                else
+                {
                 articuloNegocio.agregar(articulo);
                 MessageBox.Show("Articulo agregado correctamente");
+                }
+
+
                 Close();
             }
             catch (Exception ex)
@@ -55,7 +78,29 @@ namespace TPWinForm_equipo_W
             try
             {
                 cboCategoria.DataSource = categoriaNegocio.listar();
+                cboCategoria.ValueMember = "IDCategoria";
+                cboCategoria.DisplayMember = "Descripcion";
                 cboMarca.DataSource = marcaNegocio.listar();
+                cboMarca.ValueMember = "IDMarca";
+                cboMarca.DisplayMember = "Descripcion";
+
+                if (articulo != null)
+                {
+                    txtCodigo.Text = articulo.Codigo;
+                    txtNombre.Text = articulo.Nombre;
+                    txtDescripcion.Text = articulo.Descripcion;
+                    txtPrecio.Text = articulo.Precio.ToString(); 
+                    if (articulo.Marca != null)
+                    {
+                    cboMarca.SelectedValue = articulo.Marca.IDMarca;
+                    }
+
+                    if (articulo.Categoria != null)
+                    {
+                    cboCategoria.SelectedValue = articulo.Categoria.IDCategoria;
+                    }
+
+                }
 
             }
             catch (Exception ex)
@@ -63,5 +108,6 @@ namespace TPWinForm_equipo_W
                 MessageBox.Show(ex.ToString());
             }
         }
+
     }
 }

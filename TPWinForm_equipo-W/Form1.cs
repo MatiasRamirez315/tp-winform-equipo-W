@@ -25,25 +25,32 @@ namespace TPWinForm_equipo_W
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            listaArticulos = negocio.listar();
-
-            ImagenNegocio imagenNegocio = new ImagenNegocio();
-            listaImagenes = imagenNegocio.listar();
-
-            dgvArticulos.DataSource = listaArticulos;   
-
-            if (dgvArticulos.Columns["Imagenes"] != null)
-                dgvArticulos.Columns["Imagenes"].Visible = false;
-
-            if (dgvArticulos.Columns["IDArticulo"] != null)
-                dgvArticulos.Columns["IDArticulo"].Visible = false;
+            cargar();
         }
 
         private void btnAgregarArticulo_Click(object sender, EventArgs e)
         {
             frmAltaArticulo altaArticulo = new frmAltaArticulo();
             altaArticulo.ShowDialog();
+            cargar();
+        }
+
+        private void cargar()
+        {
+
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            listaArticulos = negocio.listar();
+
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            listaImagenes = imagenNegocio.listar();
+
+            dgvArticulos.DataSource = listaArticulos;
+
+            if (dgvArticulos.Columns["Imagenes"] != null)
+                dgvArticulos.Columns["Imagenes"].Visible = false;
+
+            if (dgvArticulos.Columns["IDArticulo"] != null)
+                dgvArticulos.Columns["IDArticulo"].Visible = false;
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
@@ -65,6 +72,17 @@ namespace TPWinForm_equipo_W
             {
                 pbxImagen.Load("https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg");
             }
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            Articulo modificar;
+            modificar = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            frmAltaArticulo modificarArticulo = new frmAltaArticulo(modificar);
+            modificarArticulo.ShowDialog();
+            cargar();
+           
         }
     }
 }
