@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
 
 namespace Negocio
 {
@@ -27,6 +28,7 @@ namespace Negocio
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
+            comando.Parameters.Clear(); 
         }
 
         public void ejecutarLectura()
@@ -44,21 +46,34 @@ namespace Negocio
             }
         }
 
-        public void EjecutarAccion() {
-
+        public void EjecutarAccion()
+        {
             comando.Connection = conexion;
-
             try
             {
-                conexion.Open();
+                if (conexion.State != ConnectionState.Open)
+                    conexion.Open();
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
+        public int ejecutarAccionScalar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return Convert.ToInt32(comando.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void setearParametro(string nombre, object valor)
         {
             comando.Parameters.AddWithValue(nombre, valor);

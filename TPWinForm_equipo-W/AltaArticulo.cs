@@ -49,6 +49,9 @@ namespace TPWinForm_equipo_W
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
+                Imagen img = new Imagen();
+                img.URLImagen = txtUrlImagen.Text;
+                img.IDArticulo = articulo.IDArticulo;
 
                 if (articulo.IDArticulo != 0)
                 {
@@ -57,7 +60,7 @@ namespace TPWinForm_equipo_W
                 }
                 else
                 {
-                articuloNegocio.agregar(articulo);
+                articuloNegocio.agregar(articulo, img);
                 MessageBox.Show("Articulo agregado correctamente");
                 }
 
@@ -109,5 +112,21 @@ namespace TPWinForm_equipo_W
             }
         }
 
+        private void txtUrlImagen_Leave(object sender, EventArgs e)
+        {
+            cargarImagen(txtUrlImagen.Text);
+        }
+
+        private void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxArticulo.Load(imagen);
+            }
+            catch
+            {
+                pbxArticulo.Load("https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg");
+            }
+        }
     }
 }

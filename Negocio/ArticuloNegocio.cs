@@ -73,24 +73,36 @@ namespace Negocio
 
         }
 
-        public void agregar(Articulo articulo)
+        public void agregar(Articulo articulo, Imagen img)
         {
-
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
-                datos.setearConsulta("Insert into Articulos(Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria) " + "VALUES('" + articulo.Codigo + "', '" + articulo.Nombre + "', '" + articulo.Descripcion + "', " + articulo.Precio + ", " + articulo.Marca.IDMarca + ", " + articulo.Categoria.IDCategoria + ")");
+                datos.setearConsulta(
+                    "INSERT INTO Articulos (Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria) " +
+                    "VALUES (@Codigo, @Nombre, @Descripcion, @Precio, @IdMarca, @IdCategoria); " +
+                    "SELECT CAST(SCOPE_IDENTITY() AS int);");
 
+                datos.setearParametro("@Codigo", articulo.Codigo);
+                datos.setearParametro("@Nombre", articulo.Nombre);
+                datos.setearParametro("@Descripcion", articulo.Descripcion);
+                datos.setearParametro("@Precio", articulo.Precio);
+                datos.setearParametro("@IdMarca", articulo.Marca.IDMarca);
+                datos.setearParametro("@IdCategoria", articulo.Categoria.IDCategoria);
+
+                int nuevoIdArticulo = datos.ejecutarAccionScalar(); 
+
+                datos.setearConsulta(
+                    "INSERT INTO Imagenes (IdArticulo, ImagenUrl) VALUES (@IdArticulo, @ImagenUrl)");
+
+                datos.setearParametro("@IdArticulo", nuevoIdArticulo);
+                datos.setearParametro("@ImagenUrl", img.URLImagen);
 
                 datos.EjecutarAccion();
-
             }
             catch (Exception ex)
             {
-
                 throw ex;
-
             }
             finally
             {
