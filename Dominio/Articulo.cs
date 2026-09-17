@@ -20,14 +20,17 @@ namespace Dominio
         [DisplayName("Categoría")]
         public Categoria Categoria { get; set; }
         public decimal Precio { get; set; }
+      
 
 
         public override string ToString()
         {
             return Descripcion;
         }
+
+        public List<Imagen> Imagenes { get; set; } = new List<Imagen>();
         //un producto podría llegar a tener una o más imágenes, sin un límite establecido. Esto debe estar contemplado en la gestión del artículo.
-        List<Imagen> Imagenes { get; set; } = new List<Imagen>(); 
+
 
     }
 }

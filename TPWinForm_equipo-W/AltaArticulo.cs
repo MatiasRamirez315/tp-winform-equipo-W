@@ -49,9 +49,24 @@ namespace TPWinForm_equipo_W
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
 
-                Imagen img = new Imagen();
-                img.URLImagen = txtUrlImagen.Text;
-                img.IDArticulo = articulo.IDArticulo;
+                if(articulo.Imagenes == null)
+                {
+                    articulo.Imagenes = new List<Imagen> ();
+                }
+                
+                if(articulo.Imagenes.Count > 0)
+                {
+                    articulo.Imagenes[0].URLImagen = txtUrlImagen.Text;
+                }
+                else if(!string.IsNullOrWhiteSpace(txtUrlImagen.Text))
+                {
+                    Imagen img = new Imagen();
+                    img.URLImagen = txtUrlImagen.Text;
+                    img.IDArticulo = articulo.IDArticulo;
+                    articulo.Imagenes.Add(img);
+
+                }
+                
 
                 if (articulo.IDArticulo != 0)
                 {
@@ -60,7 +75,7 @@ namespace TPWinForm_equipo_W
                 }
                 else
                 {
-                articuloNegocio.agregar(articulo, img);
+                articuloNegocio.agregar(articulo);
                 MessageBox.Show("Articulo agregado correctamente");
                 }
 
@@ -101,6 +116,12 @@ namespace TPWinForm_equipo_W
                     if (articulo.Categoria != null)
                     {
                     cboCategoria.SelectedValue = articulo.Categoria.IDCategoria;
+                    }
+
+                    if (articulo.Imagenes != null && articulo.Imagenes.Count > 0 )
+                    {
+                        txtUrlImagen.Text = articulo.Imagenes[0].URLImagen;
+                        cargarImagen(articulo.Imagenes[0].URLImagen);
                     }
 
                 }

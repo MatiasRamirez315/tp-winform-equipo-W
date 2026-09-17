@@ -18,7 +18,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.Precio, \r\n       M.Id AS IdMarca, M.Descripcion AS Marca, \r\n       C.Id AS IdCategoria, C.Descripcion AS Categoria\r\nFROM ARTICULOS A\r\nLEFT JOIN MARCAS M ON A.IdMarca = M.Id\r\nLEFT JOIN CATEGORIAS C ON A.IdCategoria = C.Id ");
+                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.Precio, \r\n       M.Id AS IdMarca, M.Descripcion AS Marca, \r\n       C.Id AS IdCategoria, C.Descripcion AS Categoria, I.Id as IdImagen,I.ImagenUrl AS Imagenes \r\nFROM ARTICULOS A\r\nLEFT JOIN MARCAS M ON A.IdMarca = M.Id\r\nLEFT JOIN CATEGORIAS C ON A.IdCategoria = C.Id \r\n left join Imagenes I on A.Id = I.IdArticulo");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -56,6 +56,16 @@ namespace Negocio
                         }
                     }
 
+                    auxArticulo.Imagenes = new List<Imagen>();
+
+                    if (!(datos.Lector["Imagenes"] is DBNull))
+                    {
+                        Imagen img = new Imagen();
+                        img.URLImagen = (string)datos.Lector["Imagenes"];
+
+                        auxArticulo.Imagenes.Add(img);
+                    }
+
                     lista.Add(auxArticulo);
 
                 }
@@ -73,7 +83,7 @@ namespace Negocio
 
         }
 
-        public void agregar(Articulo articulo, Imagen img)
+        public void agregar(Articulo articulo)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -92,13 +102,23 @@ namespace Negocio
 
                 int nuevoIdArticulo = datos.ejecutarAccionScalar(); 
 
-                datos.setearConsulta(
-                    "INSERT INTO Imagenes (IdArticulo, ImagenUrl) VALUES (@IdArticulo, @ImagenUrl)");
+                if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
+                {
+                    foreach (Imagen img in articulo.Imagenes)
+                    {
+                        if (!string.IsNullOrWhiteSpace(img.URLImagen))
+                        {
+                            datos.setearConsulta(
+                                "INSERT INTO Imagenes (IdArticulo, ImagenUrl) VALUES (@IdArticulo, @ImagenUrl)");
+                                datos.setearParametro("@IdArticulo", nuevoIdArticulo);
+                                datos.setearParametro("@ImagenUrl", img.URLImagen);
 
-                datos.setearParametro("@IdArticulo", nuevoIdArticulo);
-                datos.setearParametro("@ImagenUrl", img.URLImagen);
+                                datos.EjecutarAccion();
+                            
+                        }
+                    }
+                }
 
-                datos.EjecutarAccion();
             }
             catch (Exception ex)
             {
@@ -126,6 +146,24 @@ namespace Negocio
                 datos.setearParametro("@Id", articulo.IDArticulo);
 
                 datos.EjecutarAccion();
+
+                // Imagen img = new Imagen();
+                datos.setearConsulta("delete from Imagenes where IdArticulo = @IdArticulo");
+                datos.setearParametro("@IdArticulo", articulo.IDArticulo);
+                datos.EjecutarAccion();
+
+                if (articulo.Imagenes != null && articulo.Imagenes.Count > 0)
+                {
+                    foreach(Imagen img in articulo.Imagenes)
+                    {
+                        datos.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) VALUES (@IdArticulo, @ImagenUrl)");
+                        datos.setearParametro("@IdArticulo", articulo.IDArticulo);
+                        datos.setearParametro("@ImagenUrl", img.URLImagen);
+
+                        datos.EjecutarAccion();
+                    }
+                }
+               
             }
             catch (Exception ex)
             {
