@@ -46,20 +46,31 @@ namespace TPWinForm_equipo_W
 
             dgvArticulos.DataSource = listaArticulos;
 
+            OcultarColumnas();
+        }
+
+        private void OcultarColumnas()
+        {
+
             if (dgvArticulos.Columns["Imagenes"] != null)
                 dgvArticulos.Columns["Imagenes"].Visible = false;
 
             if (dgvArticulos.Columns["IDArticulo"] != null)
                 dgvArticulos.Columns["IDArticulo"].Visible = false;
+
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
+            if (dgvArticulos.CurrentRow != null)
+            {
             Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
             ImagenNegocio img = new ImagenNegocio();
             string url = img.listarImagenPorIDArticulo(seleccionado.IDArticulo);
 
             cargarImagen(url);
+
+            }
         }
 
         private void cargarImagen(string imagen)
@@ -103,6 +114,26 @@ namespace TPWinForm_equipo_W
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void btnFiltro_Click(object sender, EventArgs e)
+        {
+            List<Articulo> filtrados;
+            string filtro = txtFiltro.Text;
+
+            if (filtro != "")
+            {
+                filtrados = listaArticulos.FindAll(x => x.Nombre.ToLower().Contains( txtFiltro.Text.ToLower()) || x.Marca.Descripcion.ToLower().Contains(filtro.ToLower())); 
+            }
+            else
+            {
+                filtrados = listaArticulos;
+            }
+
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = filtrados;
+            OcultarColumnas(); //oculta id y url
         }
     }
 }
