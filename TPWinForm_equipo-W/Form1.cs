@@ -121,11 +121,51 @@ namespace TPWinForm_equipo_W
             }
         }
 
+        private bool validadFiltro()
+        {
+            if (cbxCampo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione un campo para filtrar.");
+                return true;
+            }
+            if (cbxCriterio.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione un criterio para filtrar.");
+                return true;
+            }
+            if (string.IsNullOrWhiteSpace(txtFiltroAvanzado.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un valor para filtrar.");
+                return true;
+            }
+            if (cbxCampo.SelectedItem.ToString() == "Precio" && !soloNumeros(txtFiltroAvanzado.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un valor numérico para filtrar por precio.");
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool soloNumeros(string texto)
+        {
+            foreach (char c in texto)
+            {
+                if (!char.IsDigit(c) && c != '.')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private void btnFiltro_Click(object sender, EventArgs e)
         {
             ArticuloNegocio articuloNegocio = new ArticuloNegocio();
             try
             {
+                if (validadFiltro())
+                    return;
 
                 if (cbxCampo.SelectedItem != null && cbxCampo.SelectedItem.ToString() == "Precio")
                 {
